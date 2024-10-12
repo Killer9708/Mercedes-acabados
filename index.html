@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercedes Acabados</title>
+</head>
+<body>
+    <h1>Bienvenido a Mercedes Acabados</h1>
+    <p>Haga clic en el siguiente botón para ejecutar el script de equipamiento:</p>
+    <button onclick="cargarScript()">Ejecutar Script</button>
+
+    <script>
+        function cargarScript() {
+            var script = document.createElement('script');
+            script.src = 'Equipamiento%20mercedes.js'; // Asegúrate de que el nombre sea exacto
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>
