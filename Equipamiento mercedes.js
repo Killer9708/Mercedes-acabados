@@ -22,21 +22,16 @@ var equipamientoBase = [
     "Sistema de Llamada de Emergencia E-Call",
     "Cambio de Doble Embrague Automático de 8 marchas",
     "Control de la Presión de Inflado de los Neumáticos",
-    "Tamaño de Llanta de 19\"",
+    "Tamaño de Llanta de 19",
     "Paquete Ajustes Comfort",
     "Paquete de Visibilidad Exterior",
-"Retrovisor interior/exterior izquierdo antideslumbrante automáticamente",
-"Climatización automática THERMATIC",
-
-
-
 ];
 
 // Selecciona todos los elementos <textarea> con clase "anyadidoControl"
 var elementosEquipamiento = document.querySelectorAll('textarea.anyadidoControl');
 
-// Función para verificar similitudes
-function sonSimilares(texto1, texto2) {
+// Función para verificar similitudes con un número mínimo de palabras coincidentes
+function sonSimilares(texto1, texto2, minPalabras) {
     // Compara las palabras en texto1 y texto2
     let palabras1 = texto1.split(' ').map(p => p.replace(/[^a-zA-Z0-9]/g, '').toLowerCase());
     let palabras2 = texto2.split(' ').map(p => p.replace(/[^a-zA-Z0-9]/g, '').toLowerCase());
@@ -44,21 +39,17 @@ function sonSimilares(texto1, texto2) {
     // Contar coincidencias
     let coincidencias = palabras1.filter(p => palabras2.includes(p)).length;
 
-    // Si hay coincidencias de al menos 1 palabra, se considera similar
-    return coincidencias > 0;
+    // Devuelve verdadero si las coincidencias son mayores o iguales al umbral de palabras
+    return coincidencias >= minPalabras;
 }
 
 // Itera sobre los elementos de equipamiento
 elementosEquipamiento.forEach(function(el) {
     var nombre = el.value.trim();  // Usamos el valor del <textarea>
     
-    if (equipamientoBase.includes(nombre)) {
-        el.style.backgroundColor = 'lightgreen'; // Resalta en amarillo los que coincidan exactamente
-    } else if (equipamientoBase.some(e => sonSimilares(e, nombre))) {
-        el.style.backgroundColor = 'yellow'; // Resalta en azul claro los que sean similares
+    if (equipamientoBase.includes(nombre) || equipamientoBase.some(e => sonSimilares(e, nombre, 3))) {
+        el.style.backgroundColor = 'lightgreen'; // Resalta en verde claro las coincidencias exactas o con 3 o más palabras coincidentes
+    } else if (equipamientoBase.some(e => sonSimilares(e, nombre, 2))) { 
+        el.style.backgroundColor = 'yellow'; // Resalta en amarillo las que tengan exactamente 2 palabras coincidentes
     }
 });
-
-
-
-
